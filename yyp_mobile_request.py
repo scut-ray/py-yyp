@@ -3,7 +3,7 @@
 __author__ = 'liangguanhui@qq.com'
 
 from __init__ import *
-from yyp_response import ParseYYPResponse
+from yyp_mobile_response import ParseYYPMobileResponse
 from StringIO import StringIO
 import struct
 
@@ -99,4 +99,4 @@ class YYPMobileRequest(YYPMarshal):
         sock.send(ld)
         sock.send(data)
 
-        print sock.recv(1024)
+        return ParseYYPMobileResponse(sock.makefile())

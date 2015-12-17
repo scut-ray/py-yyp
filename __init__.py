@@ -24,4 +24,6 @@ from yyp_marshal import  YYPMarshal
 from yyp_unmarshal import YYPUnMarshal
 from yyp_request import YYPRequest
 from yyp_response import YYPResponse
+from yyp_mobile_request import YYPMobileRequest
+from yyp_mobile_response import YYPMobileResponse
 from yyp_exception import YYPException
