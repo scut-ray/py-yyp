@@ -12,7 +12,7 @@ def readfull(fd, size):
     while True:
         buf = fd.read(remain)
         if not buf:
-            raise YYPException("Can not readfull for size %s, remain %s" % (size, remain))
+            raise YYPException("Can not readfull for size %s, remain %s. Maybe it has shutdown." % (size, remain))
         rl = len(buf)
         #print "read size %s, return %s" % (size, rl)
         assert rl <= remain

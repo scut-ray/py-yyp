@@ -15,7 +15,7 @@ def ParseYYPMobileResponse(input):
     data = readfull(input, datasize - 4)
 
     u = YYPUnMarshal(data)
-    mobileUri = u.popUInt32()
+    serviceUri = u.popUInt32()
     respCode = u.popUInt16()
     mobileAppId = u.popUInt32()
     mobileTopChannel = u.popUInt32()
@@ -26,6 +26,7 @@ def ParseYYPMobileResponse(input):
     uids = u.popList(YYP_UINT32)
 
     r = YYPResponse(response)
+    r.serviceUri = serviceUri
     r.respCode = respCode
     r.mobileAppId = mobileAppId
     r.mobileTopChannel = mobileTopChannel
