@@ -6,6 +6,7 @@ from __init__ import *
 from yyp_mobile_response import ParseYYPMobileResponse
 from StringIO import StringIO
 import struct
+from yyp_utils import str2intip
 
 class YYPMobileRequest(YYPMarshal):
 
@@ -50,9 +51,19 @@ class YYPMobileRequest(YYPMarshal):
         self.mobileClientType = clientType
 
     def setMobileUserIp(self, userIp):
+        if isinstance(userIp, str):
+            ret, ip = str2intip(userIp)
+            if not ret:
+                raise YYPException("Invalid ip str %s" % userIp)
+            userIp = ip
         self.mobileUserIp = userIp
 
     def setMobileServiceProxyIp(self, proxyIp):
+        if isinstance(proxyIp, str):
+            ret, ip = str2intip(proxyIp)
+            if not ret:
+                raise YYPException("Invalid ip str %s" % proxyIp)
+            proxyIp = ip
         self.mobileServiceProxyIp = proxyIp
 
     def setMobileAppId(self, appId):

@@ -28,3 +28,19 @@ def readfull(fd, size):
         if total is None:
             total = StringIO.StringIO()
         total.write(buf)
+
+def str2intip(s):
+    p = s.split(".")
+    if len(p) != 4:
+        return False, 0
+
+    ip = 0
+    for i, s in enumerate(p):
+        if not s.isdigit():
+            return False, 0
+        n = int(s)
+        if n < 0 or n > 255:
+            return False, 0
+        ip += n * (256 ** i)
+
+    return True, ip
