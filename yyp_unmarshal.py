@@ -15,7 +15,7 @@ class YYPUnMarshal(object):
         elif hasattr(input, 'read'):
             self._in = input
         else:
-            raise Exception("not match input type!" + str(type(input)))
+            raise YYPException("not match input type! %s" % type(input))
 
     def pop(self, type):
         if (type == YYP_INT8):
@@ -60,6 +60,8 @@ class YYPUnMarshal(object):
             if l <= 0:
                 return ""
             return readfull(self._in, l)
+        else:
+            raise YYPException("Invalid type %s" % type)
 
     def popInt8(self):
         return self.pop(YYP_INT8)

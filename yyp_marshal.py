@@ -45,6 +45,8 @@ class YYPMarshal(object):
             l = len(v)
             self._buf.write(struct.pack('I', l))
             self._buf.write(v)
+        else:
+            raise YYPException("Invalid type %s" % type)
 
     def putInt8(self, number):
         self.put(YYP_INT8, number)
@@ -86,7 +88,8 @@ class YYPMarshal(object):
         if lst is None:
             self.putUInt32(0)
             return
-        assert isinstance(lst, list) or isinstance(lst, tuple)
+        if not isinstance(lst, list) and not isinstance(lst, tuple):
+            raise YYPException("Invalid list type %s" % type(lst))
         l = len(lst)
         self.putUInt32(l)
         for v in lst:
@@ -96,7 +99,8 @@ class YYPMarshal(object):
         if d is None:
             self.putUInt32(0)
             return
-        assert isinstance(d, dict)
+        if not isinstance(d, dict):
+            raise YYPException("Invalid dict type %s" % type(d))
         l = len(d)
         self.putUInt32(l)
         for k, v in d.items():
