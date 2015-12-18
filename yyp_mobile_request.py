@@ -96,8 +96,8 @@ class YYPMobileRequest(YYPMarshal):
         m.putUInt32(self.mobileServiceProxyIp)
         m.putUInt32(self.mobileAppId)
 
-        m.putEmptyStringDict() #extendInfo, TODO
-        m.putEmptyStringDict() #extendInfo2, TODO
+        m.putDict(YYP_STRING16, YYP_STRING16, self.mobileExtendInfo)
+        m.putDict(YYP_STRING16, YYP_STRING16, self.mobileExtendInfo2)
 
         s = StringIO()
         m.write(s)
@@ -107,7 +107,10 @@ class YYPMobileRequest(YYPMarshal):
 
         ld = struct.pack('I', ll)
 
-        sock.send(ld)
-        sock.send(data)
+        buf = StringIO()
+        buf.write(ld)
+        buf.write(data)
+
+        sock.send(buf.getvalue())
 
         return ParseYYPMobileResponse(sock.makefile())

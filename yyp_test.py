@@ -4,11 +4,15 @@ __author__ = 'liangguanhui@qq.com'
 
 from __init__ import *
 from StringIO import StringIO
-from socket import socket
+from socket import socket, setdefaulttimeout
+setdefaulttimeout(3)
 import sys, zlib
 
 EntproxyHost = None
 EntproxyPort = None
+
+MobileHost = None
+MobilePort = None
 
 
 def as_hex(b):
@@ -72,6 +76,11 @@ def test_yyp_marshal():
 def getEntProxySocket():
     sock = socket()
     sock.connect((EntproxyHost, EntproxyPort))
+    return sock
+
+def getMobileSocket():
+    sock = socket()
+    sock.connect((MobileHost, MobilePort))
     return sock
 
 
@@ -176,13 +185,40 @@ def test_yyp_request():
     test_yyp_request_2()
     test_yyp_request_3()
 
+
+def test_yyp_mobile_request_1():
+    print "=================> test_yyp_mobile_request_1"
+    req = YYPMobileRequest(3119 + 626 * 256 * 256)
+    req.putString16("拯救单身狗")
+    req.putUInt32(0)
+    req.putUInt32(0)
+    req.putUInt32(1)
+    req.setUid(50014574)
+    req.setMobileServerId(2147561493)
+    req.setMobileUserIp("183.60.177.229")
+    req.setMobileServiceProxyIp("110.80.136.148")
+    req.putEmptyStringDict()
+
+    sock = getMobileSocket()
+    resp = req.sendAndWait(sock)
+
+    sock.close()
+
+
+def test_yyp_mobile_request():
+    test_yyp_mobile_request_1()
+
+
 def main():
-    global EntproxyHost, EntproxyPort
+    global EntproxyHost, EntproxyPort, MobileHost, MobilePort
     EntproxyHost = sys.argv[1]
     EntproxyPort = int(sys.argv[2])
+    MobileHost = sys.argv[3]
+    MobilePort = int(sys.argv[4])
 
     test_yyp_marshal()
     test_yyp_request()
+    test_yyp_mobile_request()
 
 if __name__ == "__main__":
     # 使用方法： python yyp_test.py <EntProxyHost> <EntProxyPort>
