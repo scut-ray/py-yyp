@@ -201,6 +201,16 @@ def test_yyp_mobile_request_1():
 
     sock = getMobileSocket()
     resp = req.sendAndWait(sock)
+    result = resp.popUInt32()
+    print "result =", result
+    topicId = resp.popUInt64()
+    print "topicId =", topicId
+    bannerUrl = resp.popString16()
+    print "bannerUrl =", bannerUrl
+    topicName = resp.popString16()
+    print "topicName =", topicName
+    introduction = resp.popString16()
+    print "introduction =", introduction
 
     sock.close()
 
@@ -221,5 +231,5 @@ def main():
     test_yyp_mobile_request()
 
 if __name__ == "__main__":
-    # 使用方法： python yyp_test.py <EntProxyHost> <EntProxyPort>
+    # 使用方法： python yyp_test.py <EntProxyHost> <EntProxyPort> <MobileHost> <MobilePort>
     main()
