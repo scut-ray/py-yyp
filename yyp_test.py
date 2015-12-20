@@ -5,7 +5,7 @@ __author__ = 'liangguanhui@qq.com'
 from __init__ import *
 from StringIO import StringIO
 from socket import socket, setdefaulttimeout
-setdefaulttimeout(3)
+setdefaulttimeout(5)
 import sys, zlib
 
 EntproxyHost = None
@@ -190,27 +190,59 @@ def test_yyp_mobile_request_1():
     print "=================> test_yyp_mobile_request_1"
     req = YYPMobileRequest(3119 + 626 * 256 * 256)
     req.putString16("拯救单身狗")
-    req.putUInt32(0)
+    req.putUInt32(20)
     req.putUInt32(0)
     req.putUInt32(1)
     req.setUid(50014574)
-    req.setMobileServerId(2147561493)
-    req.setMobileUserIp("183.60.177.229")
-    req.setMobileServiceProxyIp("110.80.136.148")
+    req.setMobileServerId(2147561493)  #对于cherryio框架,uid和mobileServerId似乎是必须的
     req.putEmptyStringDict()
 
     sock = getMobileSocket()
     resp = req.sendAndWait(sock)
     result = resp.popUInt32()
-    print "result =", result
     topicId = resp.popUInt64()
-    print "topicId =", topicId
     bannerUrl = resp.popString16()
-    print "bannerUrl =", bannerUrl
     topicName = resp.popString16()
-    print "topicName =", topicName
     introduction = resp.popString16()
+    usedCount = resp.popInt32()
+    workCount = resp.popInt32()
+    pageSize = resp.popInt32()
+    page = resp.popInt32()
+    print "result =", result
+    print "topicId =", topicId
+    print "bannerUrl =", bannerUrl
+    print "topicName =", topicName
     print "introduction =", introduction
+    print "usedCount =", usedCount
+    print "workCount =", workCount
+    print "pageSize =", pageSize
+    print "page =", page
+
+    #List<TopicWorks>
+    lstCnt = resp.popUInt32()
+    print "lstCnt =", lstCnt
+    for i in range(lstCnt):
+        resid = resp.popUInt64()
+        uid = resp.popUInt64()
+        tinyUrl = resp.popString16()
+        maxUrl = resp.popString16()
+        ctitle = resp.popString16()
+        color = resp.popString16()
+        playUrl = resp.popString16()
+        likeCnt = resp.popInt32()
+        dpi = resp.popString16()
+        title = resp.popString16()
+        extendInfo = resp.popStringDict()
+        print "\t(%d) resid=%s, uid=%s, tinyUrl=%s, maxUrl=%s, ctitle=%s, color=%s, playUrl=%s, likeCnt=%s, dpi=%s, title=%s, extendInfo=%s" % (i+1, resid, uid, tinyUrl, maxUrl, ctitle, color, playUrl, likeCnt, dpi, title, extendInfo)
+
+    flag = resp.popInt32()
+    isLast = resp.popInt32()
+    errorInfo = resp.popString16()
+    extendInfo = resp.popStringDict()
+    print "flag =", flag
+    print "isLast =", isLast
+    print "errorInfo =", errorInfo
+    print "extendInfo =", extendInfo
 
     sock.close()
 
