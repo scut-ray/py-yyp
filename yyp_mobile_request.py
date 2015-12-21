@@ -15,11 +15,11 @@ class YYPMobileRequest(YYPMarshal):
         self.uri = uri
         self.reqCode = reqCode
         self.mobileExtendMap = {
-            1 : "0",
-            2 : "2",
-            3 : "9610fa75c5f3fd30f525ac7e5e44f3184cc79847",
-            5 : "^_324",
-            6 : "4.4.0",
+            #1 : "0",
+            #2 : "2",
+            #3 : "9610fa75c5f3fd30f525ac7e5e44f3184cc79847",
+            #5 : "^_324",
+            #6 : "4.4.0",
         }
         self.uid = 0
         self.mobileTopChannel = 0
