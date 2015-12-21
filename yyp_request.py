@@ -4,6 +4,7 @@ __author__ = 'liangguanhui@qq.com'
 
 from __init__ import *
 from yyp_response import ParseYYPResponse
+from socket import socket
 
 class YYPRequest(YYPMarshal):
 
@@ -12,18 +13,24 @@ class YYPRequest(YYPMarshal):
         self.uri = uri
         self.reqCode = reqCode
 
-    def sendAndWait(self, sock):
+    def sendAndWait(self, input):
+        '''
+        发送请求
+        :param input: 可以是file类型，也可以是socket类型
+        :return: YYPResponse
+        '''
         data = self._buf.getvalue()
         l = len(data)
         m = YYPMarshal()
         m.putUInt32(l + 10)
         m.putUInt32(self.uri)
         m.putUInt16(self.reqCode)
-        sockfile = sock.makefile()
-        m.write(sockfile)
-        self.write(sockfile)
-        sockfile.flush()
+        if isinstance(input, socket):
+            input = input.makefile()
+        m.write(input)
+        self.write(input)
+        input.flush()
 
-        return ParseYYPResponse(sockfile)
+        return ParseYYPResponse(input)
 
 

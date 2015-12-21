@@ -210,9 +210,9 @@ def test_yyp_mobile_request_1():
     page = resp.popInt32()
     print "result =", result
     print "topicId =", topicId
-    print "bannerUrl =", bannerUrl
-    print "topicName =", topicName
-    print "introduction =", introduction
+    print "bannerUrl =", bannerUrl.decode("utf-8")
+    print "topicName =", topicName.decode("utf-8")
+    print "introduction =", introduction.decode("utf-8")
     print "usedCount =", usedCount
     print "workCount =", workCount
     print "pageSize =", pageSize
