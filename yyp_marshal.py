@@ -16,34 +16,34 @@ class YYPMarshal(object):
 
     def put(self, type, v):
         if (type == YYP_INT8):
-            self._buf.write(struct.pack('b', v))
+            self._buf.write(struct.pack('<b', v))
         elif (type == YYP_INT16):
-            self._buf.write(struct.pack('h', v))
+            self._buf.write(struct.pack('<h', v))
         elif (type == YYP_INT32):
-            self._buf.write(struct.pack('i', v))
+            self._buf.write(struct.pack('<i', v))
         elif (type == YYP_INT64):
-            self._buf.write(struct.pack('q', v))
+            self._buf.write(struct.pack('<q', v))
         elif (type == YYP_UINT8):
-            self._buf.write(struct.pack('B', v))
+            self._buf.write(struct.pack('<B', v))
         elif (type == YYP_UINT16):
-            self._buf.write(struct.pack('H', v))
+            self._buf.write(struct.pack('<H', v))
         elif (type == YYP_UINT32):
-            self._buf.write(struct.pack('I', v))
+            self._buf.write(struct.pack('<I', v))
         elif (type == YYP_UINT64):
-            self._buf.write(struct.pack('Q', v))
+            self._buf.write(struct.pack('<Q', v))
         elif (type == YYP_FLOAT32):
-            self._buf.write(struct.pack('f', v))
+            self._buf.write(struct.pack('<f', v))
         elif (type == YYP_FLOAT64):
-            self._buf.write(struct.pack('d', v))
+            self._buf.write(struct.pack('<d', v))
         elif (type == YYP_STRING16):
             assert isinstance(v, str)
             l = len(v)
-            self._buf.write(struct.pack('H', l))
+            self._buf.write(struct.pack('<H', l))
             self._buf.write(v)
         elif (type == YYP_STRING32):
             assert isinstance(v, str)
             l = len(v)
-            self._buf.write(struct.pack('I', l))
+            self._buf.write(struct.pack('<I', l))
             self._buf.write(v)
         else:
             raise YYPException("Invalid type %s" % type)

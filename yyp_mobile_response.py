@@ -9,7 +9,7 @@ from yyp_unmarshal import YYPUnMarshal
 
 def ParseYYPMobileResponse(input):
     buf = readfull(input, 4)
-    datasize = struct.unpack("I", buf)[0]
+    datasize = struct.unpack("<I", buf)[0]
     if datasize < 38:
         raise YYPException("invalid data size: %s !" % datasize)
     data = readfull(input, datasize - 4)

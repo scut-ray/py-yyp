@@ -9,7 +9,7 @@ from yyp_unmarshal import YYPUnMarshal
 
 def ParseYYPResponse(input):
     buf = readfull(input, 10)
-    datasize, uri, respCode = struct.unpack("IIH", buf)
+    datasize, uri, respCode = struct.unpack("<IIH", buf)
     if datasize < 10:
         raise YYPException("invalid data size: %s !" % datasize)
     data = readfull(input, datasize - 10)

@@ -20,43 +20,43 @@ class YYPUnMarshal(object):
     def pop(self, type):
         if (type == YYP_INT8):
             buf = readfull(self._in, 1)
-            return struct.unpack('b', buf)[0]
+            return struct.unpack('<b', buf)[0]
         elif (type == YYP_INT16):
             buf = readfull(self._in, 2)
-            return struct.unpack('h', buf)[0]
+            return struct.unpack('<h', buf)[0]
         elif (type == YYP_INT32):
             buf = readfull(self._in, 4)
-            return struct.unpack('i', buf)[0]
+            return struct.unpack('<i', buf)[0]
         elif (type == YYP_INT64):
             buf = readfull(self._in, 8)
-            return struct.unpack('q', buf)[0]
+            return struct.unpack('<q', buf)[0]
         elif (type == YYP_UINT8):
             buf = readfull(self._in, 1)
-            return struct.unpack('B', buf)[0]
+            return struct.unpack('<B', buf)[0]
         elif (type == YYP_UINT16):
             buf = readfull(self._in, 2)
-            return struct.unpack('H', buf)[0]
+            return struct.unpack('<H', buf)[0]
         elif (type == YYP_UINT32):
             buf = readfull(self._in, 4)
-            return struct.unpack('I', buf)[0]
+            return struct.unpack('<I', buf)[0]
         elif (type == YYP_UINT64):
             buf = readfull(self._in, 8)
-            return struct.unpack('Q', buf)[0]
+            return struct.unpack('<Q', buf)[0]
         elif (type == YYP_FLOAT32):
             buf = readfull(self._in, 4)
-            return struct.unpack('f', buf)[0]
+            return struct.unpack('<f', buf)[0]
         elif (type == YYP_FLOAT64):
             buf = readfull(self._in, 8)
-            return struct.unpack('d', buf)[0]
+            return struct.unpack('<d', buf)[0]
         elif (type == YYP_STRING16):
             buf = readfull(self._in, 2)
-            l = struct.unpack('H', buf)[0]
+            l = struct.unpack('<H', buf)[0]
             if l <= 0:
                 return ""
             return readfull(self._in, l)
         elif (type == YYP_STRING32):
             buf = readfull(self._in, 4)
-            l = struct.unpack('I', buf)[0]
+            l = struct.unpack('<I', buf)[0]
             if l <= 0:
                 return ""
             return readfull(self._in, l)
